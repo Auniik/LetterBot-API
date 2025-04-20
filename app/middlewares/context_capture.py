@@ -17,7 +17,7 @@ http_log_context = contextvars.ContextVar("http_log_context", default=None)
 class ContextCaptureMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         headers_context.set(dict(request.headers))
-        txn_id = f'GBS{datetime.now().strftime('%Y%m%d%H%M%S%f')}'
+        txn_id = f"{datetime.now().strftime('%Y%m%d%H%M%S%f')}"
         transaction_id_context.set(txn_id)
         client_ip_context.set(request.client.host if request.client else 'NA')
         api = "_".join(request.url.path.split("/")[-1:]) or ""

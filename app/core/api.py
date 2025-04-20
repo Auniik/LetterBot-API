@@ -40,7 +40,7 @@ async def api_call(method: str, url: str, data: dict = None, headers: dict = Non
             data = exc.response.json()
         except:
             data = {}
-        error_message = f'HTTPStatusError: [{method}] {url} - {exc.response.status_code}'
+        error_message = f"HTTPStatusError: [{method}] {url} - {exc.response.status_code}"
         debug_loggable["response"]["error"] = json.dumps(data) + error_message
         debug_loggable["response"]["code"] = exc.response.status_code
         debug_loggable["response"]["headers"] = dict(exc.response.headers)
@@ -48,7 +48,7 @@ async def api_call(method: str, url: str, data: dict = None, headers: dict = Non
 
         raise HTTPException(status_code=exc.response.status_code, detail=str(exc))
     except Exception as general_error:
-        error_message = f'{str(type(general_error))}: [{method}] {url} - {str(general_error)}'
+        error_message = f"{str(type(general_error))}: [{method}] {url} - {str(general_error)}"
         debug_loggable["response"]["error"] = str(general_error) + error_message
         debug_loggable["duration"] = time.time() - start_time
         raise HTTPException(status_code=500, detail=error_message)

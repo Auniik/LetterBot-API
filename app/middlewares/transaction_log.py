@@ -169,4 +169,4 @@ class TransactionLogMiddleware(BaseHTTPMiddleware):
         try:
             task.result()
         except Exception as e:
-            logger.error(f'An error occurred in process_post_response: {e}')
+            logger.error(f"An error occurred in process_post_response: {e}")

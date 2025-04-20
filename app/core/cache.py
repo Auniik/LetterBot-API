@@ -23,11 +23,11 @@ class RedisClient:
         self.environment = settings.APP_ENV
 
     def prefix(self):
-        return f'{self.environment}:'
+        return f"{self.environment}:"
 
     def set(self, key, value, ttl_in_seconds=None, name=None):
         start_time = time.time()
-        key = f'{self.prefix()}{key}'
+        key = f"{self.prefix()}{key}"
         debug_loggable = {
             "operation": "set",
             "key": key,
@@ -38,7 +38,7 @@ class RedisClient:
             self.cache.set(key, value, ex=ttl_in_seconds)
             return True
         except Exception as e:
-            logger.debug(f'Error setting cache: {str(e)}')
+            logger.debug(f"Error setting cache: {str(e)}")
             return False
         finally:
             log_context = get_redis_log_context()
@@ -47,7 +47,7 @@ class RedisClient:
 
     def get(self, key, name=None):
         start_time = time.time()
-        key = f'{self.prefix()}{key}'
+        key = f"{self.prefix()}{key}"
         debug_loggable = {
             "operation": "get",
             "key": key,
@@ -61,7 +61,7 @@ class RedisClient:
                 debug_loggable["hit"] = True
             return None, value
         except Exception as e:
-            logger.debug(f'Error getting cache: {str(e)}')
+            logger.debug(f"Error getting cache: {str(e)}")
             return e, None
         finally:
             log_context = get_redis_log_context()
@@ -70,7 +70,7 @@ class RedisClient:
 
     def mget(self, keys, name=None):
         start_time = time.time()
-        keys = [f'{self.prefix()}{key}' for key in keys]
+        keys = [f"{self.prefix()}{key}" for key in keys]
         debug_loggable = {
             "operation": "mget",
             "hit": {k: False for k in keys },
@@ -81,7 +81,7 @@ class RedisClient:
             debug_loggable["hit"] = {k: v is not None for k, v in zip(keys, values)}
             return None, values
         except Exception as e:
-            logger.debug(f'Error in mget: {str(e)}')
+            logger.debug(f"Error in mget: {str(e)}")
             return e, [None for _ in keys]
         finally:
             log_context = get_redis_log_context()
@@ -89,7 +89,7 @@ class RedisClient:
             log_context.append(debug_loggable)
 
     def delete(self, key):
-        key = f'{self.prefix()}{key}'
+        key = f"{self.prefix()}{key}"
         self.cache.delete(key)
 
     def flush(self):
@@ -103,14 +103,14 @@ class RedisClient:
     def hget_using_pipeline(self, keys):
         pipe = self.cache.pipeline()
         for key in keys:
-            key = f'{self.prefix()}{key}'
+            key = f"{self.prefix()}{key}"
             pipe.hgetall(key)
         return pipe.execute()
 
     def hdel_using_pipeline(self, keys):
         pipe = self.cache.pipeline()
         for key in keys:
-            key = f'{self.prefix()}{key}'
+            key = f"{self.prefix()}{key}"
             pipe.delete(key)
         pipe.execute()
 
@@ -127,7 +127,7 @@ class RedisClient:
             count = 0
             deleted = 0
             for key in keys:
-                key = f'{self.prefix()}{key}'
+                key = f"{self.prefix()}{key}"
                 pipe.delete(key)
                 count += 1
                 if count % 1000 == 0:
