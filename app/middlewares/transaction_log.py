@@ -65,14 +65,12 @@ class TransactionLogMiddleware(BaseHTTPMiddleware):
     ):
         # Determine the environment zone
         api = "_".join(request.url.path.split("/")[-1:]) or ""
-        zone = get_zone(settings)
 
         debug_loggable = {
             "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "gcpTypeLogs": "debug",
             "logger": "stash",
             "host": host_name,
-            "zone": zone,
             "domain": "TAP",
             "app": settings.APP_NAME,
             "source": "TRUEAPP",  # Can be GBSearch
@@ -134,7 +132,6 @@ class TransactionLogMiddleware(BaseHTTPMiddleware):
             "@timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f%z"),
             "logger": "stash",
             "host": host_name,
-            "zone": zone,
             "domain": "GBS",
             "app": settings.APP_NAME,
             "source": "TRUEAPP",  # Can be GBSearch
