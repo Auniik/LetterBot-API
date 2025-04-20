@@ -3,6 +3,7 @@ anyio==4.9.0
 certifi==2025.1.31
 charset-normalizer==3.4.1
 fastapi==0.115.12
+gunicorn==23.0.0
 h11==0.14.0
 hiredis==3.1.0
 httpcore==1.0.8
@@ -12,6 +13,7 @@ joblib==1.4.2
 numpy==2.2.5
 objprint==0.3.0
 orjson==3.10.16
+packaging==25.0
 psycopg2-binary==2.9.10
 pydantic==2.11.3
 pydantic-settings==2.9.1
