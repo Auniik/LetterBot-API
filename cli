@@ -1,0 +1,27 @@
+#!venv/bin python3
+
+import typer
+import os
+import shutil
+
+cli = typer.Typer()
+
+@cli.command()
+def greet(name: str):
+    typer.echo(f"Hello, {name}!")
+
+@cli.command()
+def commit_hook_setup():
+    hook_path = ".git/hooks/prepare-commit-msg"
+    source_path = ".hooks/prepare-commit-msg"
+    if os.path.exists(source_path):
+        shutil.copy(source_path, hook_path)
+        os.chmod(hook_path, 0o755)  # make it executable
+        typer.echo("Hook installed successfully.")
+    else:
+        typer.echo("Source hook file not found.")
+
+
+
+if __name__ == "__main__":
+    cli()
