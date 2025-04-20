@@ -36,9 +36,12 @@ class Response:
     def code(status_code: int, error_code: str = None, status_type: StatusType = StatusType.SUCCESS) -> 'Response':
         return Response(status_code=status_code, error_code=error_code, status_type=status_type)
 
-    def send_error(self, data: Any = None, headers=None) -> JSONResponse:
-        self.data = data
-        return self._build_response(headers=headers)
+
+    def send_error(self, error_message: str = "", error_description: str = "") -> JSONResponse:
+        self.status_type = StatusType.FAILED
+        self.error_message = error_message
+        self.error_description = error_description
+        return self._build_response()
 
     def send(self, data: Any = None, headers=None) -> JSONResponse:
         self.data = data
