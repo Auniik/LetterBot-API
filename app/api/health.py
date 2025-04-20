@@ -17,8 +17,8 @@ async def health_check(db: AsyncSession = Depends(get_db)):
         "database": False,
         # "redis": False,
     }
-    r = (await db.execute(text('SELECT true'))).fetchone()
-    result["database"] = r[0]
+    # r = (await db.execute(text('SELECT true'))).fetchone()
+    # result["database"] = r[0]
 
     # try:
     #     # Check Redis connection
