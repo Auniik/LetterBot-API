@@ -16,7 +16,7 @@ class StatusType(str, Enum):
 
 class Status(BaseModel):
     type: StatusType
-    code: str
+    code: str = "500"
     message: str = ""
     description: str = ""
     hostId: str = ""
@@ -34,7 +34,11 @@ class Response:
 
     @staticmethod
     def code(status_code: int, error_code: str = None, status_type: StatusType = StatusType.SUCCESS) -> 'Response':
-        return Response(status_code=status_code, error_code=error_code, status_type=status_type)
+        return Response(
+            status_code=status_code,
+            error_code=error_code or str(status_code),
+            status_type=status_type
+        )
 
 
     def send_error(self, error_message: str = "", error_description: str = "") -> JSONResponse:
